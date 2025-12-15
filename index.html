@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sustainable Value Creation - PETRONAS Clone Animated</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    
+    <style>
+        /* ===================================== */
+        /* 1. WARNA DAN GAYA DASAR */
+        /* ===================================== */
+        :root {
+            --primary-color: #00bcd4; /* Biru/Cyan Terang, mirip di video */
+            --dark-blue: #0a1931; /* Warna gelap untuk latar belakang finansial/highlight */
+            --petronas-teal: #00798c; /* Warna baru: Hijau Kebiruan/Teal Gelap untuk metrik */
+            --text-color: #333;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            color: var(--text-color);
+            background-color: #fff;
+        }
+
+        /* Navbar */
+        .navbar-dark .navbar-nav .nav-link {
+            color: rgba(255, 255, 255, 0.9);
+            transition: color 0.3s;
+        }
+        .navbar-dark .navbar-nav .nav-link:hover {
+            color: var(--primary-color);
+        }
+
+        /* ===================================== */
+        /* 2. HERO SECTION & SUB NAV */
+        /* ===================================== */
+        .hero-section {
+            height: 100vh;
+            background-size: cover !important;
+            background-position: center !important;
+            position: relative;
+            /* GANTI URL INI DENGAN GAMBAR HERO ANDA */
+            background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6)), url("m1.jpg");
+        }
+
+        .sub-nav > div {
+            border-top: 2px solid transparent;
+            cursor: pointer;
+            padding-top: 1rem !important;
+            transition: border-color 0.3s, color 0.3s;
+            flex-grow: 1;
+            font-size: 0.9rem;
+        }
+        .sub-nav > div.active {
+            border-color: var(--primary-color);
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        /* ===================================== */
+/* 3. LATEST UPDATES (KAROSEL) */
+/* ===================================== */
+.latest-updates .card {
+    height: 400px;
+    transition: transform 0.3s ease-in-out;
+    cursor: pointer;
+    overflow: hidden;
+    
+    
+    background-image: url(bg.jpg); 
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center; /* Tambahkan agar gambar di tengah */
+    /* ========================== */
+    
+    position: relative;
+}
+.latest-updates .card:hover {
+    transform: translateY(-5px);
+}
+        .overlay-dark {
+            /* Overlay agar teks terlihat */
+            background-image: linear-gradient(to top, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.1));
+            height: 100%;
+            width: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1;
+        }
+        .card-body {
+            position: relative;
+            z-index: 2;
+        }
+        .carousel-indicator-dot {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: #b4b0b0;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .carousel-indicator-dot.active {
+            background-color: #000;
+            width: 24px;
+            border-radius: 10px;
+        }
+
+        /* ===================================== */
+        /* 4. FINANCIAL SECTION (MODIFIKASI DI SINI) */
+        /* ===================================== */
+        .financial-results {
+            /* Warna latar belakang cadangan */
+            background-color: #0b1c2b; 
+            /* GANTI URL INI DENGAN GAMBAR LATAR BELAKANG TEKSTUR ANDA */
+            background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), 
+                              url(m9.jpeg);
+            background-size: cover;
+            background-position: center;
+        }
+        .financial-metric-box {
+            /* Ganti warna kotak metrik sesuai permintaan (Teal Gelap) */
+            background-color: var(--petronas-teal) !important;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: background-color 0.3s ease;
+        }
+        .financial-metric-box:hover {
+            background-color: #0099a6 !important; /* Sedikit lebih terang saat hover */
+        }
+        .financial-results .list-group-item {
+            border-color: rgba(255, 255, 255, 0.3) !important;
+        }
+
+
+        /* ===================================== */
+        /* 5. OUR NETWORK */
+        /* ===================================== */
+        .logo-box {
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: #555;
+            border-radius: 5px;
+            transition: all 0.2s;
+            text-align: center;
+        }
+        .logo-box:hover {
+            border-color: var(--primary-color) !important;
+            color: var(--primary-color);
+            background-color: #f8f9fa;
+        }
+
+        /* ===================================== */
+        /* 6. ANIMASI SCROLL (FADE & SLIDE UP) */
+        /* ===================================== */
+
+        /* Kelas default yang tersembunyi (Titik awal) */
+        .scroll-animate {
+            opacity: 0;
+            transform: translateY(30px); /* Mulai dari bawah */
+            transition: opacity 1s ease-out, transform 0.8s ease-out;
+        }
+        
+        /* Kelas saat elemen terlihat (Titik akhir/tampilan normal) */
+        .scroll-animate.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Memberi delay pada elemen untuk transisi bertahap */
+        .latest-updates .card:nth-child(1) { transition-delay: 0.2s; }
+        .latest-updates .card:nth-child(2) { transition-delay: 0.4s; }
+        .latest-updates .card:nth-child(3) { transition-delay: 0.6s; }
+        
+        /* Memberi delay pada kartu di Energy Transition */
+        .energy-transition .card:nth-child(1) { transition-delay: 0.3s; }
+        .energy-transition .card:nth-child(2) { transition-delay: 0.5s; }
+        .energy-transition .card:nth-child(3) { transition-delay: 0.7s; }
+
+        /* Memberi delay pada metrik di Financial Section */
+        .financial-results .col-md-4:nth-child(1) .financial-metric-box { transition-delay: 0.3s; }
+        .financial-results .col-md-4:nth-child(2) .financial-metric-box { transition-delay: 0.5s; }
+        .financial-results .col-md-4:nth-child(3) .financial-metric-box { transition-delay: 0.7s; }
+
+        /* ===================================== */
+        /* CSS BARU UNTUK ENERGY TRANSITION (ANIMASI HOVER) */
+        /* ===================================== */
+
+        .energy-transition .card {
+            position: relative; 
+            overflow: hidden;
+            height: 450px; /* Tingkatkan tinggi agar konten hover pas */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s; /* Transisi untuk hover elevation */
+        }
+
+        /* Efek Elevasi saat Hover */
+        .energy-transition .card:hover {
+            transform: translateY(-8px); /* Kartu naik sedikit */
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Container Teks Bawah (yang akan muncul) */
+        .card-hover-text {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 2rem;
+            color: white;
+            
+            background-color: var(--dark-blue); 
+            
+            /* Titik awal tersembunyi di luar kartu */
+            transform: translateY(100%); 
+            opacity: 0;
+            
+            /* Transisi slide-up yang mulus */
+            transition: transform 0.4s ease-out, opacity 0.4s ease-out;
+            z-index: 10;
+            text-align: left; 
+        }
+
+        /* Animasi Muncul saat Hover */
+        .energy-transition .card:hover .card-hover-text {
+            transform: translateY(0); /* Geser ke posisi normal (slide up) */
+            opacity: 1;
+        }
+
+        /* Teks Awal di Body Kartu disembunyikan saat hover */
+        .energy-transition .card:hover .card-body {
+            opacity: 0; 
+            transition: opacity 0.3s;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="fixed-top">
+        <nav class="navbar navbar-expand-lg navbar-dark p-3" id="mainNavbar" style="background-color: rgba(0, 0, 0, 0.4); transition: background-color 0.3s;">
+            <div class="container-fluid container">
+               <a class="navbar-brand" href="#">
+                <img src="logo.png" alt="Logo Perusahaan Anda" height="60">
+            </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item"><a class="nav-link" href="#">About Us</a></li><br>
+                        <li class="nav-item"><a class="nav-link" href="#">News & Media</a></li><br>
+                        <li class="nav-item"><a class="nav-link" href="#">Careers</a></li><br>
+                        <li class="nav-item"><a class="nav-link" href="#">Suppliers</a></li><br>
+                        <li class="nav-item"><a class="nav-link" href="#">Investor Relations</a></li><br>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Sustainability
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="#">Progressing Energy</a></li>
+                                <li><a class="dropdown-item" href="#">Sustainability</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <section class="hero-section text-white d-flex align-items-end">
+        <div class="container pb-5">
+            <h1 class="display-4 fw-bold scroll-animate">Sustainable Value Creation</h1>
+            <p class="col-lg-6 mb-4 scroll-animate" style="transition-delay: 0.2s;">As a progressive energy and solutions partner, we strive to build trusted relationships with our stakeholders, and to create a positive impact on society and the environment.</p>
+            <a href="#" class="btn btn-outline-light rounded-pill px-4 scroll-animate" style="transition-delay: 0.4s;">Learn more</a>
+
+            <div class="d-flex justify-content-between mt-5 pt-5 sub-nav scroll-animate" style="transition-delay: 0.6s;">
+                <div class="p-2 text-center">Energy Solutions</div>
+                <div class="p-2 text-center">Passionate about Progress</div>
+                <div class="p-2 text-center active">Sustainable Value Creation</div>
+                <div class="p-2 text-center">Carbon Management</div>
+                <div class="p-2 text-center">Energy Asia 2025</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="latest-updates py-5 bg-light">
+    <div class="container">
+        <h2 class="mb-4 scroll-animate">Latest Updates</h2>
+        <p class="text-muted mb-5 scroll-animate" style="transition-delay: 0.1s;">Stay informed with our latest media releases, featuring key announcements, insights, and developments</p>
+        
+        <div id="updatesCarousel" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <a href="#" class="text-decoration-none">
+                                <div class="card text-white border-0 shadow-sm scroll-animate" style="background-image: url(m7.jpg);">
+                                    <div class="overlay-dark"></div>
+                                    <div class="card-body d-flex flex-column justify-content-end p-4">
+                                        
+                                        <p class="card-text mb-1"><small>Media Release</small></p>
+                                        <h5 class="card-title fw-bold">PETRONAS Commemorates its first LNG Cargo from LNG Canada Facility</h5>
+                                        <p class="card-text"><small>7 July 2025</small></p>
+                                        <span class="text-white fw-bold mt-2">Read more &rarr;</span>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        
+                        <div class="col-md-4 mb-3">
+                            <a href="#" class="text-decoration-none">
+                                <div class="card text-white border-0 shadow-sm scroll-animate" style="background-image: url(m14.jpg);">
+                                    <div class="overlay-dark"></div>
+                                    <div class="card-body d-flex flex-column justify-content-end p-4">
+                                        <p class="card-text mb-1"><small>Media Release</small></p>
+                                        <h5 class="card-title fw-bold">PETRONAS Strengthens Global Collaboration on AI Integration Ecosystem</h5>
+                                        <p class="card-text"><small>12 November 2025</small></p>
+                                        <span class="text-white fw-bold mt-2">Read more &rarr;</span>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        
+                        <div class="col-md-4 mb-3">
+                            <a href="#" class="text-decoration-none">
+                                <div class="card text-white border-0 shadow-sm scroll-animate" style="background-image: url(m3.webp);">
+                                    <div class="overlay-dark"></div>
+                                    <div class="card-body d-flex flex-column justify-content-end p-4">
+                                        <p class="card-text mb-1"><small>Media Release</small></p>
+                                        <h5 class="card-title fw-bold">Official Signing Ceremony: PETRONAS Geoscience Technology Centre (PGTC)</h5>
+                                        <p class="card-text"><small>11 November 2025</small></p>
+                                        <span class="text-white fw-bold mt-2">Read more &rarr;</span>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="carousel-item">
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <a href="#" class="text-decoration-none">
+                                <div class="card text-white border-0 shadow-sm" style="background-image: url(m10.webp);">
+                                    <div class="overlay-dark"></div>
+                                    <div class="card-body d-flex flex-column justify-content-end p-4">
+                                        <p class="card-text mb-1"><small>Media Release</small></p>
+                                        <h5 class="card-title fw-bold">Groudbreaking Ceremony of the New Biorefinery</h5>
+                                        <p class="card-text"><small>10 November 2025</small></p>
+                                        <span class="text-white fw-bold mt-2">Read more &rarr;</span>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        
+                        <div class="col-md-4 mb-3">
+                            <a href="#" class="text-decoration-none">
+                                <div class="card text-white border-0 shadow-sm" style="background-image: url(m12.jpg);">
+                                    <div class="overlay-dark"></div>
+                                    <div class="card-body d-flex flex-column justify-content-end p-4">
+                                        <p class="card-text mb-1"><small>Media Release</small></p>
+                                        <h5 class="card-title fw-bold">PETRONAS CCS Ventures Sdn Bhd Receives Malaysia's First Offshore Assessment Permit for Carbon Capture and Storage</h5>
+                                        <p class="card-text"><small>10 November 2025</small></p>
+                                        <span class="text-white fw-bold mt-2">Read more &rarr;</span>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        
+                        <div class="col-md-4 mb-3">
+                            <a href="#" class="text-decoration-none">
+                                <div class="card text-white border-0 shadow-sm" style="background-image: url(m15.jpg);">
+                                    <div class="overlay-dark"></div>
+                                    <div class="card-body d-flex flex-column justify-content-end p-4">
+                                        <p class="card-text mb-1"><small>Media Release</small></p>
+                                        <h5 class="card-title fw-bold">PETRONAS Digital Solutions Empowering Growth</h5>
+                                        <p class="card-text"><small>9 November 2025</small></p>
+                                        <span class="text-white fw-bold mt-2">Read more &rarr;</span>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            </div>
+    </div>
+                <div class="d-flex justify-content-between align-items-center mt-3 scroll-animate" style="transition-delay: 0.8s;">
+                    <div>
+                        <button class="btn btn-light rounded-circle me-2" type="button" data-bs-target="#updatesCarousel" data-bs-slide="prev">
+                            <i class="bi bi-arrow-left"></i>
+                        </button>
+                        <button class="btn btn-light rounded-circle" type="button" data-bs-target="#updatesCarousel" data-bs-slide="next">
+                             <i class="bi bi-arrow-right"></i>
+                        </button>
+                    </div>
+                    <div class="d-flex" id="carousel-dots-container">
+                    </div>
+                    <a href="#" class="btn btn-outline-dark">View all</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="energy-transition py-5 bg-white">
+        <div class="container">
+            <h2 class="mb-4 scroll-animate">Our Energy Transition Journey</h2>
+            <p class="col-lg-8 mb-5 scroll-animate" style="transition-delay: 0.1s;">As the momentum for the energy transition accelerates, we have strengthened our business foundation to pursue our journey through the PETRONAS Energy Transition Strategy.</p>
+            
+            <div class="row text-center">
+                
+                <div class="col-md-4">
+                    <div class="card border-0 scroll-animate">
+                        <div class="card-img-top p-4" style="height: 250px; background-image: url(m2.webp); background-size: cover; background-position: center;"></div>
+                        
+                        <div class="card-body">
+                            <h5 class="card-title fw-bold text-uppercase">Core Business</h5>
+                            <p class="card-text">Operate oil and gas in a differentiated manner, safely, reliably, with focus on reducing carbon emissions.</p>
+                        </div>
+                        
+                        <div class="card-hover-text">
+                            <h5 class="fw-bold">More Energy, Less Emissions</h5>
+                            <p>Operate oil and gas in a differentiated manner, safely, reliably, with focus on reducing carbon emissions and at competitive cost.</p>
+                            <a href="#" class="btn btn-outline-light btn-sm mt-3">Read More</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="card border-0 scroll-animate">
+                        <div class="card-img-top p-4" style="height: 250px; background-image: url(m4.jpg); background-size: cover; background-position: center;"></div>
+                        
+                        <div class="card-body">
+                            <h5 class="card-title fw-bold text-uppercase">New Business</h5>
+                            <p class="card-text">Capture growth opportunities in renewables and cleaner, less emission-intensive energy solutions.</p>
+                        </div>
+                        
+                        <div class="card-hover-text">
+                            <h5 class="fw-bold">Capturing New Growth Opportunities</h5>
+                            <p>Capture growth opportunities in renewables and cleaner, less emission-intensive energy solutions including Speciality Chemicals, Carbon Capture & Storage (CCS), bio-based value chain, hydrogen and green mobility.</p>
+                            <a href="#" class="btn btn-outline-light btn-sm mt-3">Read More</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="card border-0 scroll-animate">
+                        <div class="card-img-top p-4" style="height: 250px; background-image: url(m6.webp); background-size: cover; background-position: center;"></div>
+                        
+                        <div class="card-body">
+                            <h5 class="card-title fw-bold text-uppercase">Net Zero Carbon Emissions</h5>
+                            <p class="card-text">We have identified key abatement levers to decarbonise PETRONAS' emissions, and allocated resources to meet our targets.</p>
+                        </div>
+                        
+                        <div class="card-hover-text">
+                            <h5 class="fw-bold">Pathway to Net Zero</h5>
+                            <p>We have identified key abatement levers to decarbonise PETRONAS' emissions, and have allocated resources to meet our short and medium-term targets in our progress towards achieving net zero carbon emissions by 2050.</p>
+                            <a href="#" class="btn btn-outline-light btn-sm mt-3">Read More</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-end mt-4 scroll-animate" style="transition-delay: 0.9s;">
+                <a href="#" class="btn btn-dark">View all</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="financial-results py-5 text-white">
+        <div class="container py-5">
+            <h2 class="mb-4 scroll-animate">Financial Results Announcement</h2>
+            <p class="col-lg-8 mb-5 scroll-animate" style="transition-delay: 0.1s;">Amid a challenging operating environment, PETRONAS continues to strengthen portfolio resilience for future growth.</p>
+            
+            <div class="row mb-5">
+                <div class="col-md-4 mb-4">
+                    <div class="p-4 rounded shadow-lg text-center financial-metric-box scroll-animate">
+                        <p class="text-uppercase mb-1"><small>Revenue (RM)</small></p>
+                        <h3 class="display-6 fw-bold">132.6b</h3>
+                        <p><small>Compared to RM173.6b in YTD FY2024</small></p>
+                    </div>
+                </div>
+                
+                <div class="col-md-4 mb-4">
+                    <div class="p-4 rounded shadow-lg text-center financial-metric-box scroll-animate">
+                        <p class="text-uppercase mb-1"><small>EBITDA (RM)</small></p>
+                        <h3 class="display-6 fw-bold">54.4b</h3>
+                        <p><small>Compared to RM64.1b in YTD FY2024</small></p>
+                    </div>
+                </div>
+                
+                <div class="col-md-4 mb-4">
+                    <div class="p-4 rounded shadow-lg text-center financial-metric-box scroll-animate">
+                        <p class="text-uppercase mb-1"><small>PAT (RM)</small></p>
+                        <h3 class="display-6 fw-bold">26.2b</h3>
+                        <p><small>Compared to RM32.4b in YTD FY2024</small></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-between align-items-center border-top pt-4 border-white-50 scroll-animate" style="transition-delay: 0.9s;">
+                <h4 class="mb-0">Key documents</h4>
+                <a href="#" class="text-white fw-bold">View all reports</a>
+            </div>
+            
+            <div class="list-group list-group-flush mt-3 scroll-animate" style="transition-delay: 1.1s;">
+                <a href="#" class="list-group-item d-flex justify-content-between align-items-center bg-transparent text-white border-white-50 text-decoration-none">
+                    Financial Report 1H 2025
+                    <div>
+                        <small class="me-3">August 29, 2025</small>
+                        <i class="bi bi-download"></i>
+                    </div>
+                </a>
+                <a href="#" class="list-group-item d-flex justify-content-between align-items-center bg-transparent text-white border-white-50 text-decoration-none">
+                    Press Release
+                    <div>
+                        <small class="me-3">August 29, 2025</small>
+                        <i class="bi bi-download"></i>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section class="highlights py-5 bg-light">
+        <div class="container">
+            <h2 class="mb-4 scroll-animate">Highlights</h2>
+            <p class="text-muted mb-5 scroll-animate" style="transition-delay: 0.1s;">Discover what's happening around PETRONAS.</p>
+
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    <div class="card border-0 shadow-sm scroll-animate" style="background-color: var(--dark-blue); color: white; transition-delay: 0.3s;">
+                        <div class="card-body p-5">
+                            <div class="mb-4">
+                                <h3 class="fw-bold">IMPEC</h3>
+                            </div>
+                            <h4 class="fw-bold">International Malaysia Project Excellence Conference (IMPEC)</h4>
+                            <p class="mb-4">In shaping the future of project excellence amid intensifying uncertainties and rapid change, IMPEC 2025 explores key topics...</p>
+                            <a href="#" class="text-white fw-bold">Go to Website &rarr;</a>
+                            <div class="mt-4 border-top pt-3 border-white-50">
+                                <p class="mb-1 fw-bold">24 - 25 November 2025</p>
+                                <p class="mb-0">Kuala Lumpur Convention Centre, Malaysia</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 mb-4">
+                    <div class="accordion scroll-animate" id="highlightsAccordion" style="transition-delay: 0.5s;">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                                    Majlis Sekalung Budi 2025: The Story of Us
+                                </button>
+                            </h2>
+                            <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#highlightsAccordion">
+                                <div class="accordion-body">
+                                    Summary text for the article...
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                    Legacy Beneath the Waves
+                                </button>
+                            </h2>
+                            <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#highlightsAccordion">
+                                <div class="accordion-body">
+                                    Summary text for the article...
+                                </div>
+                            </div>
+                        </div>
+                       <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                    The Spirit of Gresik
+                                </button>
+                            </h2>
+                            <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#highlightsAccordion">
+                                <div class="accordion-body">
+                                    Summary text for the article...
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+   <style>
+/* CSS Tambahan untuk meniru tampilan gambar */
+.our-network {
+    background-color: #5d359b; /* Latar belakang ungu seperti di gambar */
+    color: white; /* Teks putih */
+    padding: 50px 0; /* Padding atas dan bawah */
+}
+
+.our-network h2 {
+    color: white;
+}
+
+/* Mengubah warna teks pada sub-judul */
+.our-network .text-secondary {
+    color: #e0e0e0 !important;
+    font-weight: 500;
+}
+
+/* Style untuk kotak yang berisi gambar dan teks */
+.logo-box-image {
+    background-color: white;
+    color: #333; /* Warna teks di dalam kotak */
+    padding: 15px;
+    border-radius: 8px;
+    min-height: 100px; /* Tinggi minimum yang disesuaikan */
+    display: flex;
+    align-items: center;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.logo-box-image:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Style untuk ikon/tempat gambar */
+.icon-placeholder {
+    width: 60px; /* Ukuran ikon lebih besar agar terlihat jelas */
+    height: 60px;
+    border-radius: 50%;
+    margin-right: 15px;
+    background-color: #ccc; /* Warna dasar placeholder */
+    flex-shrink: 0;
+    /* Tempat untuk mengatur gambar latar belakang */
+    background-size: cover;
+    background-position: center;
+    overflow: hidden; /* Penting untuk memastikan gambar yang dimasukkan berbentuk bulat */
+}
+
+/* Style untuk teks */
+.logo-box-image .text-content {
+    font-size: 0.95rem;
+    line-height: 1.3;
+}
+</style>
+
+<section class="our-network py-5">
+    <div class="container">
+        <h2 class="mb-4 scroll-animate">Our Network</h2>
+        
+        <h5 class="mt-4 mb-3 text-secondary scroll-animate" style="transition-delay: 0.1s;">Businesses</h5>
+        <div class="row g-3">
+            
+            <div class="col-6 col-md-4 col-lg-3 col-xl-2">
+                <a href="#" class="text-decoration-none text-reset">
+                    <div class="logo-box-image scroll-animate" style="transition-delay: 0.2s;">
+                        <div class="icon-placeholder" style="background-image: url(m2.webp);">
+                            </div>
+                        <div class="text-content">PETRONAS Chemicals Group Berhad</div>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-6 col-md-4 col-lg-3 col-xl-2">
+                <a href="#" class="text-decoration-none text-reset">
+                    <div class="logo-box-image scroll-animate" style="transition-delay: 0.3s;">
+                        <div class="icon-placeholder" style="background-image: url(m3.webp);"></div>
+                        <div class="text-content">PETRONAS Energy & Gas Trading</div>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-6 col-md-4 col-lg-3 col-xl-2">
+                <a href="#" class="text-decoration-none text-reset">
+                    <div class="logo-box-image scroll-animate" style="transition-delay: 0.4s;">
+                        <div class="icon-placeholder" style="background-image: url(m4.jpg);"></div>
+                        <div class="text-content">PETRONAS Gas Berhad</div>
+                    </div>
+                </a>
+            </div>
+            
+            <div class="col-6 col-md-4 col-lg-3 col-xl-2">
+                <a href="#" class="text-decoration-none text-reset">
+                    <div class="logo-box-image scroll-animate" style="transition-delay: 0.5s;">
+                        <div class="icon-placeholder" style="background-image: url(m5.jpg);"></div>
+                        <div class="text-content">PETRONAS Marine</div>
+                    </div>
+                </a>
+            </div>
+            
+            <div class="col-6 col-md-4 col-lg-3 col-xl-2">
+                <a href="#" class="text-decoration-none text-reset">
+                    <div class="logo-box-image scroll-animate" style="transition-delay: 0.6s;">
+                        <div class="icon-placeholder" style="background-image: url(m6.webp);"></div>
+                        <div class="text-content">Pengerang Integrated Complex</div>
+                    </div>
+                </a>
+            </div>
+            
+            <div class="col-6 col-md-4 col-lg-3 col-xl-2">
+                <a href="#" class="text-decoration-none text-reset">
+                    <div class="logo-box-image scroll-animate" style="transition-delay: 0.7s;">
+                        <div class="icon-placeholder" style="background-image: url(m7.jpg);"></div>
+                        <div class="text-content">PETRONAS Lubricants International</div>
+                    </div>
+                </a>
+            </div>
+            
+            
+        
+     
+
+    <footer class="bg-dark text-white pt-5 pb-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h5 class="text-uppercase fw-bold mb-4" style="color: var(--primary-color);">Discover</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-white text-decoration-none mb-2 d-block">Media Release</a></li>
+                        <li><a href="#" class="text-white text-decoration-none mb-2 d-block">Publications</a></li>
+                        <li><a href="#" class="text-white text-decoration-none mb-2 d-block">Announcements</a></li>
+                        <li><a href="#" class="text-white text-decoration-none mb-2 d-block">Events</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h5 class="text-uppercase fw-bold mb-4" style="color: var(--primary-color);">Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-white text-decoration-none mb-2 d-block">Privacy Policy</a></li>
+                        <li><a href="#" class="text-white text-decoration-none mb-2 d-block">Terms & Conditions</a></li>
+                        <li><a href="#" class="text-white text-decoration-none mb-2 d-block">Contact Us</a></li>
+                        <li><a href="#" class="text-white text-decoration-none mb-2 d-block">Sitemap</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h5 class="text-uppercase fw-bold mb-4" style="color: var(--primary-color);">Follow Us</h5>
+                    <div class="d-flex fs-4">
+                        <a href="#" class="text-white me-3"><i class="bi bi-facebook"></i></a>
+                        <a href="#" class="text-white me-3"><i class="bi bi-twitter"></i></a>
+                        <a href="#" class="text-white me-3"><i class="bi bi-linkedin"></i></a>
+                        <a href="#" class="text-white me-3"><i class="bi bi-youtube"></i></a>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <img src="logo.png" alt="Logo Perusahaan Anda" height="80" class="mb-3">
+                    <p><small>&copy; 2025 PETRONAS. All rights reserved.</small></p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // =====================================
+        // JAVASCRIPT UNTUK ANIMASI SCROLL (Intersection Observer)
+        // =====================================
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const animateElements = document.querySelectorAll('.scroll-animate');
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target); // Stop observing once visible
+                    }
+                });
+            }, {
+                threshold: 0.1 // Trigger when 10% of the element is visible
+            });
+
+            animateElements.forEach(element => {
+                observer.observe(element);
+            });
+        });
+
+
+        // =====================================
+        // JAVASCRIPT UNTUK NAVBAR
+        // =====================================
+
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('mainNavbar');
+            if (window.scrollY > 50) {
+                // Background lebih gelap setelah scroll 50px
+                navbar.style.backgroundColor = 'var(--dark-blue)'; 
+            } else {
+                // Background transparan di atas
+                navbar.style.backgroundColor = 'rgba(0, 0, 0, 0.4)';
+            }
+        });
+
+
+        // =====================================
+        // JAVASCRIPT UNTUK DOT INDICATOR KAROSEL
+        // =====================================
+
+        const updatesCarousel = document.getElementById('updatesCarousel');
+        const carouselDotsContainer = document.getElementById('carousel-dots-container');
+
+        if (updatesCarousel) {
+            const carousel = new bootstrap.Carousel(updatesCarousel, {
+                interval: 5000 
+            });
+
+            // Hitung jumlah item di karosel
+            const carouselItems = updatesCarousel.querySelectorAll('.carousel-item').length;
+
+            // Buat dot indicator
+            for (let i = 0; i < carouselItems; i++) {
+                const dot = document.createElement('span');
+                dot.classList.add('carousel-indicator-dot', 'mx-1');
+                if (i === 0) {
+                    dot.classList.add('active');
+                }
+                dot.setAttribute('data-bs-target', '#updatesCarousel');
+                dot.setAttribute('data-bs-slide-to', i.toString());
+                carouselDotsContainer.appendChild(dot);
+            }
+
+            // Update dot indicator saat slide berubah
+            updatesCarousel.addEventListener('slide.bs.carousel', function (e) {
+                const dots = carouselDotsContainer.querySelectorAll('.carousel-indicator-dot');
+                dots.forEach(dot => dot.classList.remove('active'));
+                dots[e.to].classList.add('active');
+            });
+        }
+    </script>
+</body>
+</html>
